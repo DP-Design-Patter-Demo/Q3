@@ -1,1 +1,1 @@
-# Q3
+# CompositePattern

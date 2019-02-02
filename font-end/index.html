@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Composite Design Pattern</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/jquery.jOrgChart.css" />
+    <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+
+    <script type="text/javascript" src="lib/prettify.js"></script>
+
+    <!-- jQuery includes -->
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui.min.js"></script>
+
+    <script src="lib/jquery.jOrgChart.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            $("#org").jOrgChart({
+                chartElement: '#chart',
+                dragAndDrop: true
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="control-btn">
+        <button data-modal-trigger="trigger-1" id="trigger" class="trigger">
+            <i class="fa fa-fire" aria-hidden="true"></i>
+            Add Employee
+        </button>
+
+        <button data-modal-trigger="trigger-2" id="trigger" class="trigger">
+            <i class="fa fa-fire" aria-hidden="true"></i>
+            Show Stat
+        </button>
+    </div>
+
+    <div id="control">
+        <div data-modal="trigger-1" class="modal">
+            <article class="content-wrapper">
+                <button class="close"></button>
+                <header class="modal-header">
+                    <h2>Add Employee</h2>
+                </header>
+                <div class="body">
+                    <div class="addElement">
+                        <div class="form-container">
+                            <label for="subordinateOptions">Employee Boss</label>
+                            <select id="subordinateOptions">
+                            </select>
+                        </div>
+                        <div class="form-container">
+                            <label for="employeeName">Employee Name</label>
+                            <input type="text" id="employeeName" name="employeeName" placeholder="Employee Name">
+                        </div>
+                        <div class="form-container">
+                            <label for="employeeDept">Employee Dept</label>
+                            <input type="text" id="employeeDept" placeholder="Department">
+
+                        </div>
+                        <div class="form-container">
+                            <label for="employeeSalary">Employee Salary</label>
+                            <input type="number" id="employeeSalary" placeholder="salary">
+
+                        </div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="action" id="addEmployee">Add Employee</button>
+                    <button style="display: none;" id="close" class="close action">Accept</button>
+                </footer>
+            </article>
+        </div>
+
+        <div data-modal="trigger-2" class="  modal">
+            <article class="content-wrapper">
+                <button class="close"></button>
+                <header class="modal-header">
+                    <h2>Employee Stats</h2>
+                </header>
+                <div class="body">
+                    <div class="form-container">
+                        <label for="employeeOptions">Boss</label>
+                        <select id="employeeOptions">
+                        </select>
+                    </div>
+                    <div class=" stat form-container">
+                        <div id="statResult"></div>
+                    </div>
+                    <!-- <div class="showStats">
+                        <select id="employeeOptions">
+                        </select>
+
+                    </div> -->
+
+                </div>
+                <footer class="modal-footer">
+                    <button class="action" id="showStatBtn">Show Stat</button>
+                    <button style="display:none" class="action ">Accept</button>
+                </footer>
+            </article>
+        </div>
+
+
+    </div>
+    <ul id="org" style="display:none">
+    </ul>
+
+    <div id="chart" class="orgChart"></div>
+    <script>
+        var exports = {};
+        const buttons = document.querySelectorAll(`button[data-modal-trigger]`);
+        const addElement = document.getElementById(`addEmployee`);
+
+        addElement.addEventListener('click', x => {
+            closeModals();
+        })
+
+        for (let button of buttons) {
+            modalEvent(button);
+        }
+
+        function modalEvent(button) {
+            button.addEventListener('click', () => {
+                const trigger = button.getAttribute('data-modal-trigger');
+                const modal = document.querySelector(`[data-modal=${trigger}]`);
+                const contentWrapper = modal.querySelector('.content-wrapper');
+                const close = modal.querySelector('.close');
+
+                close.addEventListener('click', () => modal.classList.remove('open'));
+                modal.addEventListener('click', () => modal.classList.remove('open'));
+                contentWrapper.addEventListener('click', (e) => e.stopPropagation());
+
+                modal.classList.toggle('open');
+            });
+        }
+
+        function closeModals() {
+            const closeBtn = document.querySelectorAll('.close');
+            for (let button of closeBtn) {
+                button.click();
+            }
+        }
+    </script>
+    <script src="../CompositePatternDemo.js"></script>
+
+</body>
+
+</html>

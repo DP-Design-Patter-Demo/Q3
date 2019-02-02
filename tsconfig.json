@@ -1,0 +1,19 @@
+// {
+//     "compilerOptions": {
+//         "module": "commonjs",
+//         "target": "es3",
+//         "sourceMap": true,
+//         "outFile": "./main.js",
+//         "lib": [
+//             "commonjs",
+//             "dom",
+//             "es2015",
+//             "es5",
+//             "es6"
+//         ]
+//     },
+//     "files": [
+//         "./Employee.ts",
+//         "./CompositePatternDemo.ts"
+//     ]
+// }
